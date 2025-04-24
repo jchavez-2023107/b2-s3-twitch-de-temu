@@ -6,13 +6,23 @@ export const Input = ({
     field,
     label,
     value,
+    onChangeHandler,
+    showErrorMessage,
+    validationMessage,
+    onBlurtHandler,
     type,
-    placeholder
+    placeholder,
+    textarea
 }) => {
 
-    const handleChange = (e)=>{
-        console.log('Cambio de estado');
+    const handleValueChange = (e)=>{
+        //console.log('Cambio de estado');
+        onChangeHandler(e.target.value, field)
         
+    }
+
+    const handleOnBlur = ()=>{
+
     }
 
   return (
@@ -20,12 +30,30 @@ export const Input = ({
         <div className='auth-form-label'>
             <span>{label}</span>
         </div>
-        <input 
-            type={type} 
-            value={value}
-            onChange={handleChange}
-            placeholder={placeholder}
-        />
+
+        {
+            textarea ? (
+                <textarea 
+                    type={type}
+                    value={value}
+                    onChange={handleValueChange}
+                    onBlur={handleOnBlur}
+                    rows={5}
+                    style={{maxWidth: '400px'}} 
+                />
+            ) : (
+                <input 
+                    type={type} 
+                    value={value}
+                    onChange={handleValueChange}
+                    onBlur={handleOnBlur}
+                    placeholder={placeholder}
+                />
+            )
+        }
+        <span className="auth-form-validation-message">
+            {showErrorMessage && validationMessage}
+        </span>
     </>
   )
 }
@@ -34,6 +62,11 @@ Input.propTypes = {
     field: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    onChangeHandler: PropTypes.func.isRequired,
     type: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired
+    placeholder: PropTypes.string.isRequired,
+    showErrorMessage: PropTypes.bool.isRequired,
+    validationMessage: PropTypes.string,
+    onBlurtHandler: PropTypes.func.isRequired,
+    textarea: PropTypes.bool
 }
