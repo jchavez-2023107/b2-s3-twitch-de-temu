@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from '../Input/Input'
-import { useRegister } from '../shared/hooks/useRegister'
+import { useRegister } from '../shared/hooks/useRegister.js'
+import { emailValidationMessage, passwordConfirmValidationMessage, passwordValidationMessage, usernameValidationMessage, validateEmail, validatePassword, validatePasswordConfirm, validateUsername } from '../shared/validators/validator.js'
 
 
 export const Register = () => {
@@ -44,6 +45,44 @@ export const Register = () => {
         )
     }
 
+    //Validar si el valor es correcto    
+    const handleValidationOnBlur = (value, field)=>{
+        let isValid = false
+        switch (field) {
+            case 'email':
+                isValid= validateEmail(value) //Validar si el email es valido
+                break;
+
+            case 'username':
+                isValid= validateUsername(value) //Validar si el username es valido
+                break;        
+                    
+            case 'password':
+                isValid=  validatePassword(value) //Validar si el password es valido
+                break;
+            
+            case 'passwordConfirm':
+                isValid= validatePasswordConfirm(formData.password.value, value) //Validar si el passwordConfirm es valido
+                break;
+                
+            default:
+                break;
+        }
+        console.log(isValid);
+        
+        setFormData((prevData) => (
+            {
+                ...prevData,
+                //Inyección del nuevo valor:
+                [field]:{
+                    ...prevData[field],
+                    isValid,
+                    showError: !isValid
+                }
+            }
+        ))
+    }
+    
                         //Nuevo valor //Identificador del input que cambió
     const handleValueChange = (value, field)=>{
         /* //Evento
@@ -84,6 +123,9 @@ export const Register = () => {
                 onChangeHandler={handleValueChange}
                 placeholder={formData.email.value}
                 type='email' 
+                onBlurHandler={handleValidationOnBlur}
+                showErrorMessage={formData.email.showError}
+                validationMessage={emailValidationMessage}
             />
             <Input 
                 field='username'
@@ -92,6 +134,9 @@ export const Register = () => {
                 onChangeHandler={handleValueChange}
                 placeholder={formData.username.value}
                 type='username' 
+                onBlurHandler={handleValidationOnBlur}
+                showErrorMessage={formData.username.showError}
+                validationMessage={usernameValidationMessage}
             />
             <Input 
                 field='password'
@@ -100,6 +145,9 @@ export const Register = () => {
                 onChangeHandler={handleValueChange}
                 placeholder={formData.password.value}
                 type='password' 
+                onBlurHandler={handleValidationOnBlur}
+                showErrorMessage={formData.password.showError}
+                validationMessage={passwordValidationMessage}
             />
             <Input 
                 field='passwordConfirm'
@@ -108,6 +156,9 @@ export const Register = () => {
                 onChangeHandler={handleValueChange}
                 placeholder={formData.passwordConfirm.value}
                 type='password' 
+                onBlurHandler={handleValidationOnBlur}
+                showErrorMessage={formData.passwordConfirm.showError}
+                validationMessage={passwordConfirmValidationMessage}
             />
             {/* <label htmlFor=''>Nombre</label>
             <input placeholder={name} name='name' onChange={handleValueChange} type='text' /> */}

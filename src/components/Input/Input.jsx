@@ -9,7 +9,7 @@ export const Input = ({
     onChangeHandler,
     showErrorMessage,
     validationMessage,
-    onBlurtHandler,
+    onBlurHandler,
     type,
     placeholder,
     textarea
@@ -21,8 +21,8 @@ export const Input = ({
         
     }
 
-    const handleOnBlur = ()=>{
-
+    const handleOnBlur = (e)=>{
+        onBlurHandler(e.target.value, field)
     }
 
   return (
@@ -67,6 +67,6 @@ Input.propTypes = {
     placeholder: PropTypes.string.isRequired,
     showErrorMessage: PropTypes.bool.isRequired,
     validationMessage: PropTypes.string,
-    onBlurtHandler: PropTypes.func.isRequired,
+    onBlurHandler: PropTypes.func.isRequired,
     textarea: PropTypes.bool
 }
