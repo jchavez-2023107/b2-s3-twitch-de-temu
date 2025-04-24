@@ -21,3 +21,15 @@ export const registerRequest = async (user) => {
         }
     }    
 }
+
+//Ruta para logear
+export const loginRequest = async (user) => {
+    try {
+        return await apiClient.post('/auth/login', user)
+    } catch (err) {
+        return {
+            error: true,
+            err
+        }
+    }    
+}

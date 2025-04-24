@@ -16,6 +16,7 @@ export const validateUsername = (username)=>{
 /* ----------------------- VALIDACIÓN DE CONTRASEÑA ----------------------- */
 export const validatePassword = (password)=>{
     const regex = /^\S{6,12}$/
+    // Para chetar después
     return regex.test(password)
 }
 /* ----------------------- VALIDACIÓN DE CONTRASEÑA ----------------------- */

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Input } from '../Input/Input'
-import { useRegister } from '../shared/hooks/useRegister.js'
-import { emailValidationMessage, passwordConfirmValidationMessage, passwordValidationMessage, usernameValidationMessage, validateEmail, validatePassword, validatePasswordConfirm, validateUsername } from '../shared/validators/validator.js'
+import { useRegister } from '../../shared/hooks/useRegister'
+import { emailValidationMessage, passwordConfirmValidationMessage, passwordValidationMessage, usernameValidationMessage, validateEmail, validatePassword, validatePasswordConfirm, validateUsername } from '../../shared/validators/validator'
 
 
 export const Register = () => {
     //const [name, setName] = useState('Coloshooo')
+    const prueba = false
     const form = {
         email: {
             value: 'jchavez-2023107@kinal.edu.gt',
@@ -31,6 +32,10 @@ export const Register = () => {
 
     const [formData, setFormData] = useState(form)
     const { register } = useRegister()
+    const isSubmitButtonDisabled = !formData.email.isValid    ||
+                                   !formData.username.isValid ||
+                                   !formData.password.isValid ||
+                                   !formData.passwordConfirm.isValid
 
     //Todas las funciones o acciones comienzan con Handle
     const handleSubmit = (event)=>{
@@ -43,6 +48,7 @@ export const Register = () => {
             formData.username.value,
             formData.password.value
         )
+        prueba=true
     }
 
     //Validar si el valor es correcto    
@@ -164,7 +170,7 @@ export const Register = () => {
             <input placeholder={name} name='name' onChange={handleValueChange} type='text' /> */}
             {/* <input id='name' type='text' /> */}
             {/* <button onClick={handleSubmit}>Enviar</button> */}
-            <button type='submit'>Enviar</button>
+            <button type='submit' disabled={isSubmitButtonDisabled}>Enviar</button>
         </form>
     </div>
   )
